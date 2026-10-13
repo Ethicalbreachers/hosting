@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: hostingwebsite
+    runtime: python
+    plan: free
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: gunicorn -w 1 --threads 4 --timeout 120 -b 0.0.0.0:$PORT app:app
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.7
+      - key: SECRET_KEY
+        generateValue: true
+      - key: FIREBASE_KEY_JSON
+        sync: false
+      - key: FIREBASE_STORAGE_BUCKET
+        sync: false
+      - key: ADMIN_EMAILS
+        sync: false
+      - key: FB_API_KEY
+        sync: false
+      - key: FB_AUTH_DOMAIN
+        sync: false
+      - key: FB_PROJECT_ID
+        sync: false
+      - key: FB_STORAGE_BUCKET
+        sync: false
+      - key: FB_SENDER_ID
+        sync: false
+      - key: FB_APP_ID
+        sync: false
